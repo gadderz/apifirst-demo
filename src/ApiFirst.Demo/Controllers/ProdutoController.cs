@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ApiFirst.Demo.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class ProdutoController : ControllerBase
     {
@@ -18,6 +18,7 @@ namespace ApiFirst.Demo.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [EndpointSummary("Lista os produtos disponíveis para compra.")]
+        [EndpointGroupName("v1")]
         public IActionResult ListarProdutos([FromQuery] ListarProdutos listarProdutos)
         {
             if (string.IsNullOrEmpty(listarProdutos.Busca) is false)
@@ -29,19 +30,25 @@ namespace ApiFirst.Demo.Controllers
         }
 
         [HttpPost]
+        [EndpointGroupName("v1")]
+        [EndpointSummary("Cria um novo produto")]
         public IActionResult AdicionarProduto([FromBody] Produto produto)
         {
             return Ok();
         }
 
         [HttpPut("{IdProduto}")]
+        [EndpointGroupName("v1")]
+        [EndpointSummary("Atualiza as informações do produto")]
         public IActionResult AtualizarProduto(int IdProduto, [FromBody] Produto produto)
         {
             return Ok();
         }
 
         [HttpDelete("{IdProduto}")]
-        public IActionResult RemoverProduto(int IdProduto)
+        [EndpointGroupName("v1")]
+        [EndpointSummary("Remove um produto caso")]
+        public IActionResult RemoverProduto([FromRoute]int IdProduto)
         {
             return Ok();
         }
